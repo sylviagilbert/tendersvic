@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Published Tenders</title>
+</head>
+<body>
+  <h2>Published Tenders</h2>
+  <div id="tenderList"></div>
+
+  <script>
+    async function loadTenders() {
+      const res = await fetch('/tenders');
+      const tenders = await res.json();
+
+      const container = document.getElementById('tenderList');
+      tenders.forEach(t => {
+        const el = document.createElement('div');
+        el.innerHTML = `
+          <h3>${t.title}</h3>
+          <p>${t.description}</p>
+          <small>Closing: ${t.closingDate}</small>
+        `;
+        container.appendChild(el);
+      });
+    }
+
+    window.onload = loadTenders;
+  </script>
+</body>
+</html>
