@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Submit Tender</title>
+</head>
+<body>
+  <h2>Submit a New Tender</h2>
+  <form id="tenderForm">
+    <input type="text" name="title" placeholder="Tender Title" required><br>
+    <textarea name="description" placeholder="Description" required></textarea><br>
+    <input type="date" name="closingDate" required><br>
+    <button type="submit">Publish Tender</button>
+  </form>
+
+  <script>
+    document.getElementById('tenderForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = {
+        title: this.title.value,
+        description: this.description.value,
+        closingDate: this.closingDate.value,
+      };
+
+      const response = await fetch('/publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        alert('Tender published successfully!');
+        this.reset();
+      } else {
+        alert('Failed to publish tender.');
+      }
+    });
+  </script>
+</body>
+</html>
